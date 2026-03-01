@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git 'https://github.com/jhontt112-png/devops-task-manager.git'
-            }
-        }
-
         stage('Build Backend Image') {
             steps {
                 sh 'docker build -t $DOCKER_USER/backend-app ./backend'
