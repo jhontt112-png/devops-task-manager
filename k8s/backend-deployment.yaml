@@ -14,16 +14,17 @@ spec:
     spec:
       containers:
       - name: backend
-        image: yourdockerhubusername/backend-app
+        image: backend-app:latest
+        imagePullPolicy: Never
         ports:
         - containerPort: 5000
         env:
         - name: DB_HOST
-          value: mysql
+          value: localhost
         - name: DB_USER
           value: root
         - name: DB_PASSWORD
-          value: root
+          value: prasad
         - name: DB_NAME
           value: taskmanager
         - name: JWT_SECRET
