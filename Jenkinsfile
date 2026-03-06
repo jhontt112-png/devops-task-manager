@@ -3,25 +3,53 @@ pipeline {
 
     environment {
         DOCKER_USER = "testin121"
+        BACKEND_IMAGE = "${DOCKER_USER}/backend-app"
+        FRONTEND_IMAGE = "${DOCKER_USER}/frontend-app"
     }
 
     stages {
 
-        stage('Build Backend Image') {
+        stage('Clone Repository') {
             steps {
-                sh 'docker build -t $DOCKER_USER/backend-app ./backend'
+                git 'https://github.com/YOUR_GITHUB_USERNAME/devops-task-manager.git'
             }
         }
 
-        stage('Push Backend Image') {
+        stage('Install Backend Dependencies') {
+            steps {
+                dir('backend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Install Frontend Dependencies') {
+            steps {
+                dir('frontend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh 'docker build -t $BACKEND_IMAGE ./backend'
+                sh 'docker build -t $FRONTEND_IMAGE ./frontend'
+            }
+        }
+
+        stage('Push Docker Images') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub',
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
+
                     sh 'echo $PASS | docker login -u $USER --password-stdin'
-                    sh 'docker push $DOCKER_USER/backend-app'
+
+                    sh 'docker push $BACKEND_IMAGE'
+                    sh 'docker push $FRONTEND_IMAGE'
                 }
             }
         }
