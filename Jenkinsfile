@@ -11,7 +11,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/YOUR_GITHUB_USERNAME/devops-task-manager.git'
+                git 'https://github.com/jhontt112-png/devops-task-manager.git'
             }
         }
 
