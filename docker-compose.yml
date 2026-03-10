@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   mysql:
     image: mysql:8
     container_name: mysql_db
@@ -17,11 +16,7 @@ services:
   backend:
     build: ./backend
     container_name: backend_app
-
-    restart: always  
-
     restart: always
-
     ports:
       - "5000:5000"
     depends_on:
@@ -42,21 +37,23 @@ services:
     depends_on:
       - backend
 
-
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
+    user: root
     ports:
       - "8080:8080"
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
 
   sonarqube:
     image: sonarqube:lts
     container_name: sonarqube
     ports:
       - "9000:9000"
+
   nexus:
     image: sonatype/nexus3
     container_name: nexus
@@ -66,6 +63,3 @@ services:
 volumes:
   mysql_data:
   jenkins_home:
-volumes:
-  mysql_data:
-
