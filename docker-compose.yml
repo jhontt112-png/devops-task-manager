@@ -17,7 +17,11 @@ services:
   backend:
     build: ./backend
     container_name: backend_app
+<<<<<<< HEAD
     restart: always  
+=======
+    restart: always
+>>>>>>> c916fce630f56ffb900d828914d4df055832cc3c
     ports:
       - "5000:5000"
     depends_on:
@@ -38,6 +42,7 @@ services:
     depends_on:
       - backend
 
+<<<<<<< HEAD
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
@@ -62,3 +67,7 @@ services:
 volumes:
   mysql_data:
   jenkins_home:
+=======
+volumes:
+  mysql_data:
+>>>>>>> c916fce630f56ffb900d828914d4df055832cc3c
